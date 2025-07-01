@@ -1,1 +1,29 @@
 @import "tailwindcss";
+
+/* Base layer: define global variables and base styles */
+@layer base {
+  :root {
+    --color-primary: #ffffff;
+    --color-secondary: #e27b7c;
+    --font-sans: "Sora", sans-serif;
+  }
+
+  [data-theme="dark"] {
+    background-color: #141414;
+  }
+
+  body {
+    font-family: var(--font-sans);
+  }
+}
+
+/* Utilities layer: define custom utility classes like text-primary */
+@layer utilities {
+  .text-primary {
+    color: var(--color-primary);
+  }
+  .text-secondary {
+    color: var(--color-secondary);
+  }
+}
+
