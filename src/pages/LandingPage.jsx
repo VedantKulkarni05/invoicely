@@ -22,9 +22,9 @@ const LandingPage = () => {
         onClick={() => Navigate("/invoice")}
         className="relative group mt-7"
       >
-        <span className="absolute inset-0 bg-[#ffffff] rounded-[31.2px] transition-all duration-300 group-hover:translate-x-2 group-hover:-translate-y-2"></span>
+        <span className="absolute inset-0 bg-[#ffffff] rounded-lg transition-all duration-500 group-hover:translate-x-2 group-hover:-translate-y-2"></span>
 
-        <div className="relative bg-[#e27b7c] border-2 border-[#e27b7c] text-white rounded-[31.2px] px-5 py-2.5 flex items-center justify-center gap-2">
+        <div className="relative bg-[#e27b7c] border-2 border-[#e27b7c] text-white rounded-lg px-5 py-2.5 flex items-center justify-center gap-2">
           <img src={startbtn} alt="Start button" className="w-7 h-7" />
           <span className="text-xl font-outerSans font-medium">Start</span>
         </div>
