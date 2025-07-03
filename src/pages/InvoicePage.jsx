@@ -8,13 +8,36 @@ import SummarySection from "../components/SummarySection";
 
 const InvoicePage = () => {
   const [currStep, setSteps] = useState(0);
+  const goToNextStep = () => setSteps(currStep + 1);
+
   const stepsData = [
-    { id: 0, label: "From & To", Component: <FromtoSection /> },
-    { id: 1, label: "Invoice Details", Component: <InvoiceDetailsSection /> },
-    { id: 2, label: "Items", Component: <ItemsSection /> },
-    { id: 3, label: "Payment", Component: <PaymentSection /> },
-    { id: 4, label: "Summary", Component: <SummarySection /> },
+    {
+      id: 0,
+      label: "From & To",
+      Component: <FromtoSection goToNextStep={goToNextStep} />,
+    },
+    {
+      id: 1,
+      label: "Invoice Details",
+      Component: <InvoiceDetailsSection goToNextStep={goToNextStep} />,
+    },
+    {
+      id: 2,
+      label: "Items",
+      Component: <ItemsSection goToNextStep={goToNextStep} />,
+    },
+    {
+      id: 3,
+      label: "Payment",
+      Component: <PaymentSection goToNextStep={goToNextStep} />,
+    },
+    {
+      id: 4,
+      label: "Summary",
+      Component: <SummarySection goToNextStep={goToNextStep} />,
+    },
   ];
+
   return (
     <div className="min-h-screen bg-[#141414] text-white p-6" data-theme="dark">
       <header className="flex items-center gap-x-4 mb-8">
@@ -49,7 +72,11 @@ const InvoicePage = () => {
       </header>
       <section className="bg-zinc-900 p-6 rounded-xl border border-zinc-700">
         {/* <FromtoSection /> */}
-        {stepsData[currStep].Component}
+        {stepsData.map((step, i) => (
+          <div key={i} className={currStep === i ? "" : "hidden"}>
+            {step.Component}
+          </div>
+        ))}{" "}
       </section>
     </div>
   );

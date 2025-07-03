@@ -30,7 +30,7 @@ const LandingPage = () => {
         </div>
       </button>
     </div>
-  );
+  );im
 };
 
 export default LandingPage;

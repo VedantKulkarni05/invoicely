@@ -1,7 +1,7 @@
-import React from "react";
+import React, { Component } from "react";
 import startbtn from "../assets/StartBtn.svg";
 
-const FromtoSection = () => {
+const FromtoSection = ({ goToNextStep }) => {
   return (
     <>
       <div className="grid grid-cols-2 md:grid-cols-2 gap-6">
@@ -197,6 +197,7 @@ const FromtoSection = () => {
         <button
           type="button"
           className="relative group mt-7 w-[120px] h-[36px]"
+          onClick={goToNextStep}
         >
           <span className="absolute inset-0 bg-[#ffffff] rounded-lg transition-all duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"></span>
 
