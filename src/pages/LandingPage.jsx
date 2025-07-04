@@ -1,5 +1,5 @@
 import logo from "../assets/Logo.svg";
-import startbtn from "../assets/StartBtn.svg";
+import Startbtn from "../assets/StartBtn.svg";
 import { useNavigate } from "react-router-dom";
 const LandingPage = () => {
   const Navigate = useNavigate();
@@ -25,12 +25,12 @@ const LandingPage = () => {
         <span className="absolute inset-0 bg-[#ffffff] rounded-lg transition-all duration-500 group-hover:translate-x-2 group-hover:-translate-y-2"></span>
 
         <div className="relative bg-[#e27b7c] border-2 border-[#e27b7c] text-white rounded-lg px-5 py-2.5 flex items-center justify-center gap-2">
-          <img src={startbtn} alt="Start button" className="w-7 h-7" />
+          <img src={Startbtn} alt="Start button" className="w-7 h-7" />
           <span className="text-xl font-outerSans font-medium">Start</span>
         </div>
       </button>
     </div>
-  );im
+  );
 };
 
 export default LandingPage;

@@ -70,13 +70,17 @@ const InvoicePage = () => {
           ))}
         </div>
       </header>
-      <section className="bg-zinc-900 p-6 rounded-xl border border-zinc-700">
+      <section className="bg-zinc-900 p-6 rounded-xl border border-zinc-700 mb-8">
         {/* <FromtoSection /> */}
         {stepsData.map((step, i) => (
           <div key={i} className={currStep === i ? "" : "hidden"}>
             {step.Component}
           </div>
         ))}{" "}
+      </section>
+
+      <section className="flex justify-center bg-zinc-900 p-6 rounded-xl border border-zinc-700 mb-8 ">
+        <h3 className="text-primary text-3xl font-semibold">Live Preview</h3>
       </section>
     </div>
   );
