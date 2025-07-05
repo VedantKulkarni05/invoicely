@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { Component, useState } from "react";
 import logo from "../assets/Logo.svg";
 import FromtoSection from "../components/FromtoSection";
@@ -5,36 +6,93 @@ import InvoiceDetailsSection from "../components/InvoiceDetailsSection";
 import ItemsSection from "../components/ItemsSection";
 import PaymentSection from "../components/PaymentSection";
 import SummarySection from "../components/SummarySection";
+import LivePreview from "../components/LivePreview";
 
 const InvoicePage = () => {
   const [currStep, setSteps] = useState(0);
   const goToNextStep = () => setSteps(currStep + 1);
 
+  const [invoiceData, setInvoiceData] = useState({
+    from: {
+      name: "",
+      address: "",
+      zip: "",
+      city: "",
+      country: "",
+      email: "",
+      phone: "",
+    },
+    to: {
+      name: "",
+      address: "",
+      zip: "",
+      city: "",
+      country: "",
+      email: "",
+      phone: "",
+    },
+    invoiceDetails: { number: "", date: "", dueDate: "" },
+    items: [],
+    payment: { taxRate: 0, discount: 0 },
+    notes: "",
+    bankDetails: { bankName: "", accountNumber: "", swiftCode: "" },
+  });
+
   const stepsData = [
     {
       id: 0,
       label: "From & To",
-      Component: <FromtoSection goToNextStep={goToNextStep} />,
+      Component: (
+        <FromtoSection
+          goToNextStep={goToNextStep}
+          invoiceData={invoiceData}
+          setInvoiceData={setInvoiceData}
+        />
+      ),
     },
     {
       id: 1,
       label: "Invoice Details",
-      Component: <InvoiceDetailsSection goToNextStep={goToNextStep} />,
+      Component: (
+        <InvoiceDetailsSection
+          goToNextStep={goToNextStep}
+          invoiceData={invoiceData}
+          setInvoiceData={setInvoiceData}
+        />
+      ),
     },
     {
       id: 2,
       label: "Items",
-      Component: <ItemsSection goToNextStep={goToNextStep} />,
+      Component: (
+        <ItemsSection
+          goToNextStep={goToNextStep}
+          invoiceData={invoiceData}
+          setInvoiceData={setInvoiceData}
+        />
+      ),
     },
     {
       id: 3,
       label: "Payment",
-      Component: <PaymentSection goToNextStep={goToNextStep} />,
+      Component: (
+        <PaymentSection
+          goToNextStep={goToNextStep}
+          invoiceData={invoiceData}
+          setInvoiceData={setInvoiceData}
+        />
+      ),
     },
     {
       id: 4,
       label: "Summary",
-      Component: <SummarySection goToNextStep={goToNextStep} />,
+      Component: (
+        <SummarySection
+          goToNextStep={goToNextStep}
+          invoiceData={invoiceData}
+          setInvoiceData={setInvoiceData}
+        />
+      ),
     },
   ];
 
@@ -80,7 +138,9 @@ const InvoicePage = () => {
       </section>
 
       <section className="flex justify-center bg-zinc-900 p-6 rounded-xl border border-zinc-700 mb-8 ">
-        <h3 className="text-primary text-3xl font-semibold">Live Preview</h3>
+        <div className="w-full max-w-6xl">
+          <LivePreview invoiceData={invoiceData} />
+        </div>
       </section>
     </div>
   );
