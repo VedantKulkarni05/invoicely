@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { Component, useState } from "react";
+import { useState } from "react";
 import logo from "../assets/Logo.svg";
 import FromtoSection from "../components/FromtoSection";
 import InvoiceDetailsSection from "../components/InvoiceDetailsSection";
