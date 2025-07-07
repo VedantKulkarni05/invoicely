@@ -12,7 +12,7 @@ A simple web app to generate freelance invoices with support for form inputs, it
 - **React** – UI library
 - **Vite** – Frontend tooling
 - **Tailwind CSS** – Utility-first styling
-- **HeadlessUI** – UI components
+- **ShadCN/UI** – UI components
 - **React Router** – Routing
 - **react-hot-toast** – Notifications
 - **jsPDF / html2canvas** (planned) – PDF export

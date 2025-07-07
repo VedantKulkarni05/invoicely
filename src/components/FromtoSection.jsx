@@ -12,7 +12,7 @@ const FromtoSection = ({ goToNextStep, invoiceData, setInvoiceData }) => {
       },
     }));
   };
-  console.log( invoiceData);
+  // console.log( invoiceData);
 
   return (
     <>
