@@ -1,5 +1,6 @@
 import React from "react";
 import logo from "../assets/Logo.svg";
+import { format } from "date-fns";
 
 const LivePreview = ({ invoiceData }) => {
   // Sample data for the invoice
@@ -60,6 +61,8 @@ const LivePreview = ({ invoiceData }) => {
   //     swiftCode: "GBIUSAUSXXX",
   //   },
   // };
+  console.log("Issue Date:", invoiceData.issueDate);
+  console.log("Due Date:", invoiceData.dueDate);
 
   return (
     <div className="bg-gray-100 p-4 sm:p-8 print:p-0">
@@ -83,10 +86,16 @@ const LivePreview = ({ invoiceData }) => {
                 {invoiceData.invoiceNumber || "0001"}
               </p>
               <p className="text-sm">
-                <strong>Date:</strong> {invoiceData.invoiceDate || "YYYY-MM-DD"}
+                <strong>Date:</strong>{" "}
+                {invoiceData.issueDate
+                  ? format(new Date(invoiceData.issueDate), "yyyy-MM-dd")
+                  : ""}
               </p>
               <p className="text-sm">
-                <strong>Due Date:</strong> {invoiceData.dueDate || "YYYY-MM-DD"}
+                <strong>Due Date:</strong>{" "}
+                {invoiceData.dueDate
+                  ? format(new Date(invoiceData.dueDate), "yyyy-MM-dd")
+                  : ""}
               </p>
             </div>
           </div>
@@ -133,7 +142,6 @@ const LivePreview = ({ invoiceData }) => {
             </p>
           </div>
         </section>
-
         {/* 3. Items Table */}
         <section className="mb-12">
           <table className="w-full text-left table-auto">
@@ -177,7 +185,6 @@ const LivePreview = ({ invoiceData }) => {
             </tbody>
           </table>
         </section>
-
         {/* 4. Summary & Totals */}
         <section className="flex justify-end mb-12">
           <div className="w-full sm:w-1/2 lg:w-1/3">
@@ -197,7 +204,6 @@ const LivePreview = ({ invoiceData }) => {
             </div>
           </div>
         </section>
-
         {/* 5. Notes & Payment Details */}
         <footer className="border-t pt-8 text-sm text-gray-600">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">

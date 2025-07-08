@@ -28,7 +28,7 @@ const InvoiceDetailsSection = ({
     <>
       <h1 className="text-2xl font-semibold pb-3">Invoice Details:</h1>
 
-      <div className="max-w-xl ml-0 space-y-4 pl-2">
+      <div className="max-w-3xs ml-0 space-y-4 pl-2">
         {/* Invoice Number */}
         <div className="flex  items-center gap-2">
           <label htmlFor="invoiceNumber" className="whitespace-nowrap">
@@ -36,10 +36,10 @@ const InvoiceDetailsSection = ({
           </label>
           <Input
             id="invoiceNumber"
-            placeholder="Invoice number"
+            placeholder="Invoice No"
             value={invoiceData.invoiceNumber}
             onChange={(e) => handleChange("invoiceNumber", e.target.value)}
-            className="flex-1 text-secondary focus-visible:ring-white/50"
+            className="flex-1 text-secondary focus-visible:ring-white/50 "
           />
         </div>
 
@@ -50,7 +50,7 @@ const InvoiceDetailsSection = ({
             <PopoverTrigger asChild>
               <Input
                 readOnly
-                value={format(issueDate, "PPP")}
+                value={format(issueDate, "yyyy-MM-dd")}
                 placeholder="Pick a date"
                 className="cursor-pointer flex-1 text-secondary"
               />
@@ -76,7 +76,7 @@ const InvoiceDetailsSection = ({
             <PopoverTrigger asChild>
               <Input
                 readOnly
-                value={format(dueDate, "PPP")}
+                value={format(dueDate, "yyyy-MM-dd")}
                 placeholder="Pick a date"
                 className="cursor-pointer flex-1 text-secondary"
               />
