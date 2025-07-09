@@ -61,8 +61,6 @@ const LivePreview = ({ invoiceData }) => {
   //     swiftCode: "GBIUSAUSXXX",
   //   },
   // };
-  console.log("Issue Date:", invoiceData.issueDate);
-  console.log("Due Date:", invoiceData.dueDate);
 
   return (
     <div className="bg-gray-100 p-4 sm:p-8 print:p-0">
@@ -185,6 +183,7 @@ const LivePreview = ({ invoiceData }) => {
             </tbody>
           </table>
         </section>
+
         {/* 4. Summary & Totals */}
         <section className="flex justify-end mb-12">
           <div className="w-full sm:w-1/2 lg:w-1/3">
