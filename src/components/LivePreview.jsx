@@ -63,8 +63,8 @@ const LivePreview = ({ invoiceData }) => {
   // };
 
   return (
-    <div className="bg-gray-100 p-4 sm:p-8 print:p-0">
-      <div className="max-w-4xl mx-auto bg-white shadow-lg p-8 sm:p-12 text-gray-800 print:shadow-none print:p-0">
+    <div className="bg-gray-600 p-4 sm:p-8 print:p-0 rounded-lg">
+      <div className="max-w-4xl mx-auto bg-white shadow-lg p-8 sm:p-12 text-secondary print:shadow-none print:p-0 rounded-lg">
         {/* 1. Header Row */}
         <header className="flex justify-between items-start mb-12 border-b pb-6">
           <div className="flex items-center">
@@ -141,6 +141,7 @@ const LivePreview = ({ invoiceData }) => {
           </div>
         </section>
         {/* 3. Items Table */}
+        {/* 3. Items Table */}
         <section className="mb-12">
           <table className="w-full text-left table-auto">
             <thead className="bg-gray-200">
@@ -160,16 +161,25 @@ const LivePreview = ({ invoiceData }) => {
               </tr>
             </thead>
             <tbody>
-              {invoiceData.items?.length > 0 ? (
+              {Array.isArray(invoiceData.items) &&
+              invoiceData.items.length > 0 ? (
                 invoiceData.items.map((item, index) => (
                   <tr key={index} className="border-b border-gray-200">
-                    <td className="p-3">{item.description || "-"}</td>
-                    <td className="p-3 text-right">{item.quantity || 0}</td>
+                    <td className="p-3">
+                      {item.description?.trim() || item.name?.trim() || "-"}
+                    </td>
+                    <td className="p-3 text-right">{item.quantity ?? 0}</td>
                     <td className="p-3 text-right">
-                      ${item.rate?.toFixed(2) || "0.00"}
+                      $
+                      {typeof item.rate === "number"
+                        ? item.rate.toFixed(2)
+                        : "0.00"}
                     </td>
                     <td className="p-3 text-right">
-                      ${item.total?.toFixed(2) || "0.00"}
+                      $
+                      {typeof item.total === "number"
+                        ? item.total.toFixed(2)
+                        : "0.00"}
                     </td>
                   </tr>
                 ))
@@ -229,7 +239,7 @@ const LivePreview = ({ invoiceData }) => {
           <div className="text-center mt-12 print:hidden">
             <button
               onClick={() => window.print()}
-              className="bg-blue-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-blue-700 transition duration-300"
+              className="bg-blue-900 text-secondary font-bold py-2 px-6 rounded-lg hover:bg-blue-950 transition duration-300"
             >
               Print / Save as PDF
             </button>
