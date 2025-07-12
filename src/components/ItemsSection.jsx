@@ -1,16 +1,16 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect } from "react";
 import startbtn from "../assets/StartBtn.svg";
-import trash from "../assets/trash-icon.svg";
 import { Input } from "@/components/ui/input.jsx";
 import { Textarea } from "@/components/ui/textarea";
+import { Plus, Trash, CircleArrowRight } from "lucide-react";
 
 const ItemsSection = ({ goToNextStep, invoiceData, setInvoiceData }) => {
   const handleItemChange = (index, field, value) => {
     const updatedItems = [...invoiceData.items];
     updatedItems[index][field] = value;
 
-    // Recalculate total
+    // Recalculate row total
     const qty = Number(updatedItems[index].quantity || 0);
     const rate = Number(updatedItems[index].rate || 0);
     updatedItems[index].total = qty * rate;
@@ -35,65 +35,72 @@ const ItemsSection = ({ goToNextStep, invoiceData, setInvoiceData }) => {
       ],
     }));
   };
-  useEffect(() => {
-    if ((invoiceData.items, length === 0)) {
-      handleAddItem();
-    }
-  }, []);
 
   const handleRemoveItem = (indexRemove) => {
-    const newItems = invoiceData.items.filter((items, i) => i !== indexRemove);
     if (invoiceData.items.length <= 1) return;
-    setInvoiceData({ ...invoiceData, items: newItems });
+    const newItems = invoiceData.items.filter((_, i) => i !== indexRemove);
+    setInvoiceData((prev) => ({
+      ...prev,
+      items: newItems,
+    }));
   };
 
-  // Auto-calculate subtotal, tax, and total when items change
+  // Auto add first item if none
+  useEffect(() => {
+    if (invoiceData.items.length === 0) {
+      handleAddItem();
+    }
+  }, [invoiceData.items.length]);
+
+  // Subtotal and total calculation
   useEffect(() => {
     const subtotal = invoiceData.items.reduce(
       (sum, item) => sum + Number(item.total || 0),
       0
     );
 
-    const taxRate = invoiceData.tax?.rate || 0;
-    const taxAmount = (subtotal * taxRate) / 100;
-    const total = subtotal + taxAmount;
-
     setInvoiceData((prev) => ({
       ...prev,
       subtotal,
-      tax: {
-        ...prev.tax,
-        amount: taxAmount,
-      },
-      total,
+      total: subtotal,
     }));
   }, [invoiceData.items]);
 
+  const formatCurrency = (amount) => {
+    const currency = invoiceData.currency || "$";
+    return `${currency}${Number(amount).toLocaleString("en-US", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    })}`;
+  };
+
   return (
     <>
-      <h1 className="text-3xl font-semibold mb-6">Items:</h1>
-      <div className="space-y-6">
+      <h1 className="text-2xl md:text-3xl font-semibold mb-4 md:mb-6">
+        Items:
+      </h1>
+      <div>
         {invoiceData.items.map((item, index) => (
           <div
             key={index}
-            className="grid grid-cols-6 border text-primary rounded-md"
+            className="grid grid-cols-8 md:grid-cols-12 gap-4 md:gap-7 border text-primary rounded-xl text-lg md:text-2xl mb-5 md:mb-7 p-3 md:p-5"
           >
-            {/* Description */}
-            <div className="col-span-2 p-6">
-              <label className="font-semibold block">Name:</label>
+            {/* Item Name */}
+            <div className="col-span-8 md:col-span-5">
+              <label className="font-semibold block mb-2">Name:</label>
               <Input
                 placeholder="Item Name"
                 value={item.description}
                 onChange={(e) =>
                   handleItemChange(index, "description", e.target.value)
                 }
-                className="w-full text-secondary font-medium"
+                className="w-full h-10 md:h-12 text-secondary font-medium"
               />
             </div>
 
             {/* Quantity */}
-            <div className="col-span-2 p-6">
-              <label className="font-semibold block">Quantity:</label>
+            <div className="col-span-4 md:col-span-2">
+              <label className="font-semibold block mb-2">Quantity:</label>
               <Input
                 type="number"
                 placeholder="0"
@@ -101,13 +108,13 @@ const ItemsSection = ({ goToNextStep, invoiceData, setInvoiceData }) => {
                 onChange={(e) =>
                   handleItemChange(index, "quantity", Number(e.target.value))
                 }
-                className="w-full text-secondary font-medium"
+                className="w-full h-10 md:h-12 text-secondary font-medium"
               />
             </div>
 
             {/* Rate */}
-            <div className="col-span-2 p-6">
-              <label className="font-semibold block">Rate:</label>
+            <div className="col-span-4 md:col-span-2">
+              <label className="font-semibold block mb-2">Rate:</label>
               <Input
                 type="number"
                 placeholder="0"
@@ -115,67 +122,71 @@ const ItemsSection = ({ goToNextStep, invoiceData, setInvoiceData }) => {
                 onChange={(e) =>
                   handleItemChange(index, "rate", Number(e.target.value))
                 }
-                className="w-full text-secondary font-medium"
+                className="w-full h-10 md:h-12 text-secondary font-medium"
               />
             </div>
 
-            {/* Total */}
-            <div className="col-span-6 p-6 pt-0">
-              <label className="font-semibold block mb-1">Total:</label>
-              <p className="text-xl font-bold text-secondary">
-                ${item.total?.toFixed(2) || "0.00"}
+            {/* Total - Shows on same row as inputs on desktop */}
+            <div className="col-span-8 md:col-span-3">
+              <label className="font-semibold block mb-2 md:mb-5">Total:</label>
+              <p className="text-xl md:text-2xl font-bold text-secondary">
+                {formatCurrency(item.total || 0)}
               </p>
             </div>
 
-            {/* Optional: Description text area */}
-            <div className="col-span-6 p-6 pt-0">
-              <label className="font-semibold block mb-1">Description:</label>
+            {/* Description */}
+            <div className="col-span-8 md:col-span-9 mb-3">
+              <label className="font-semibold block mb-2">Description:</label>
               <Textarea
                 placeholder="More details (optional)"
                 value={item.notes || ""}
                 onChange={(e) =>
                   handleItemChange(index, "notes", e.target.value)
                 }
-                className="w-full text-secondary font-medium"
+                className="w-full h-20 md:h-24 text-secondary font-medium"
               />
             </div>
-            {/* Delete Item */}
 
-            <div className="col-span-6 p-6 pt-0 flex justify-end ">
+            {/* Delete Button */}
+            <div className="col-span-8 md:col-span-3 flex items-end justify-end">
               <button
                 onClick={() => handleRemoveItem(index)}
-                className="bg-red-500 text-primary py-2 px-4   flex items-center gap-0.5 rounded-md hover:bg-red-700 transition duration-300 ... disabled:opacity-50 disabled:cursor-not-allowed"
+                className="bg-red-600 text-primary py-2 px-4 md:py-3 md:px-7 flex items-center rounded-md hover:bg-red-700 transition duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
                 disabled={invoiceData.items.length === 1}
               >
-                <img src={trash} />
-                <span className="font-semibold">Remove Item</span>
+                <Trash className="w-5 h-5 md:w-6 md:h-6" />
               </button>
             </div>
           </div>
         ))}
       </div>
 
-      {/* Add Item */}
-      <div className="mt-6">
+      {/* Add Button */}
+      <div className="mt-4 md:mt-6">
         <button
           onClick={handleAddItem}
-          className="bg-green-600 text-primary text-xl py-2 px-4 rounded-md hover:bg-green-700 transition duration-300"
+          className="bg-green-600 text-primary text-lg md:text-xl py-2 px-4 md:py-3 md:px-7 rounded-md hover:bg-green-700 transition duration-300"
         >
-          + Add Item
+          <Plus className="w-5 h-5 md:w-6 md:h-6" />
         </button>
       </div>
 
-      {/* Next Step Button */}
+      {/* Next Button */}
       <div className="flex justify-end">
         <button
           type="button"
-          className="relative group mt-7 w-[120px] h-[36px]"
+          className="relative group md:mt-7 w-[100px] h-[32px] md:w-[120px] md:h-[36px]"
           onClick={goToNextStep}
         >
           <span className="absolute inset-0 bg-white rounded-lg transition-all duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" />
           <div className="relative bg-[#e27b7c] border-2 border-[#e27b7c] text-white rounded-lg w-full h-full flex items-center justify-center gap-1 px-2">
-            <img src={startbtn} alt="Next button" className="w-3 h-3" />
-            <span className="text-sm">Next</span>
+            <img
+              src={startbtn}
+              alt="Next button"
+              className="w-5 h-7 md:w-5 md:h-6"
+            />
+
+            <span className="text-xs md:text-sm">Next</span>
           </div>
         </button>
       </div>

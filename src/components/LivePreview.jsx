@@ -147,7 +147,7 @@ const LivePreview = ({ invoiceData }) => {
             <thead className="bg-gray-200">
               <tr>
                 <th className="p-3 font-bold uppercase text-gray-600">
-                  Description
+                  Name
                 </th>
                 <th className="p-3 text-right font-bold uppercase text-gray-600">
                   Qty
