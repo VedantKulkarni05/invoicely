@@ -141,7 +141,6 @@ const LivePreview = ({ invoiceData }) => {
           </div>
         </section>
         {/* 3. Items Table */}
-        {/* 3. Items Table */}
         <section className="mb-12">
           <table className="w-full text-left table-auto">
             <thead className="bg-gray-200">
