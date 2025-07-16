@@ -145,9 +145,7 @@ const LivePreview = ({ invoiceData }) => {
           <table className="w-full text-left table-auto">
             <thead className="bg-gray-200">
               <tr>
-                <th className="p-3 font-bold uppercase text-gray-600">
-                  Name
-                </th>
+                <th className="p-3 font-bold uppercase text-gray-600">Name</th>
                 <th className="p-3 text-right font-bold uppercase text-gray-600">
                   Qty
                 </th>
@@ -209,6 +207,12 @@ const LivePreview = ({ invoiceData }) => {
                 <p>Total</p>
                 <p>${invoiceData.total?.toFixed(2) || "0.00"}</p>
               </div>
+
+              {invoiceData.amountInWords && (
+                <p className="mt-2 text-sm text-gray-600 italic text-right">
+                  {invoiceData.amountInWords}
+                </p>
+              )}
             </div>
           </div>
         </section>

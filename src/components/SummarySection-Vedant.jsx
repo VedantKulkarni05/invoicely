@@ -2,6 +2,7 @@ import React, { useState, useCallback } from "react";
 import SummaryCalc from "./SummaryCalc";
 import { Textarea } from "@/components/ui/textarea";
 import { Upload, X } from "lucide-react";
+//import { toWords } from "number-to-words";
 import downloadI from "../assets/download-icon.svg";
 
 const SummarySection = ({ goToNextStep, invoiceData, setInvoiceData }) => {
@@ -10,9 +11,14 @@ const SummarySection = ({ goToNextStep, invoiceData, setInvoiceData }) => {
 
   const handleCalculationChange = useCallback(
     (calculationData) => {
+      // const total = calculationData.totalAmount || 0;
+      // const amountInWords = `${toWords(Math.floor(total))} dollar${
+      //   total === 1 ? "" : "s"
+      // } only`;
       setInvoiceData((prev) => ({
         ...prev,
         ...calculationData,
+        //amountInWords,
       }));
     },
     [setInvoiceData]
